@@ -1,27 +1,32 @@
 package com.agenda_virtual.modelos;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "notas")
 public class Nota {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String titulo;
-    private double valor;
-    private double valorMaximo;
+    private Double valor;
+    private Double valorMaximo;
+
+    @ManyToOne
+    @JoinColumn(name = "alumno_id")
     private Alumno alumno;
+
+    @ManyToOne
+    @JoinColumn(name = "profesor_id")
     private Profesor profesor;
 
-    public Nota(int id, String titulo, double valor, double valorMaximo, Alumno alumno, Profesor profesor) {
-        this.id = id;
-        this.titulo = titulo;
-        this.valor = valor;
-        this.valorMaximo = valorMaximo;
-        this.alumno = alumno;
-        this.profesor = profesor;
-    }
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,29 +1,33 @@
 package com.agenda_virtual.modelos;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "mensajes")
 public class Mensaje {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String asunto;
     private String contenido;
     private LocalDateTime fechaEnvio;
+
+    @ManyToOne
+    @JoinColumn(name = "remitente_id")
     private Usuario remitente;
+
+    @ManyToOne
+    @JoinColumn(name = "destinatario_id")
     private Usuario destinatario;
 
-    public Mensaje(int id, String asunto, String contenido, LocalDateTime fechaEnvio, Usuario remitente, Usuario destinatario) {
-        this.id = id;
-        this.asunto = asunto;
-        this.contenido = contenido;
-        this.fechaEnvio = fechaEnvio;
-        this.remitente = remitente;
-        this.destinatario = destinatario;
-    }
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

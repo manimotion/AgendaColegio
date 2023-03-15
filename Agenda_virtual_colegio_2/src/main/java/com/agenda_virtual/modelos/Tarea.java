@@ -1,31 +1,36 @@
 package com.agenda_virtual.modelos;
 
-import java.time.LocalDate;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "tareas")
 public class Tarea {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "alumno_id")
     private Alumno alumno;
+
+    @ManyToOne
+    @JoinColumn(name = "profesor_id")
     private Profesor profesor;
+
     private String descripcion;
-    private LocalDate fechaEntrega;
+    private LocalDateTime fechaEntrega;
+
+    @Enumerated(EnumType.STRING)
     private EstadoTarea estado;
 
-    public Tarea(int id, Alumno alumno, Profesor profesor, String descripcion, LocalDate fechaEntrega, EstadoTarea estado) {
-        this.id = id;
-        this.alumno = alumno;
-        this.profesor = profesor;
-        this.descripcion = descripcion;
-        this.fechaEntrega = fechaEntrega;
-        this.estado = estado;
-    }
-
     // Getters y setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -53,11 +58,11 @@ public class Tarea {
         this.descripcion = descripcion;
     }
 
-    public LocalDate getFechaEntrega() {
+    public LocalDateTime getFechaEntrega() {
         return fechaEntrega;
     }
 
-    public void setFechaEntrega(LocalDate fechaEntrega) {
+    public void setFechaEntrega(LocalDateTime fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
     }
 

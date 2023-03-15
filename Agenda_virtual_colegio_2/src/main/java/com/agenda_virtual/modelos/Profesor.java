@@ -1,16 +1,27 @@
 package com.agenda_virtual.modelos;
 
-import java.util.List;
+import com.sun.tools.javac.util.List;
 
-public class Profesor extends Usuario {
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "profesores")
+public class Profesor {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String materia;
-    private List<Alumno> alumnosAsignados;
 
-    public Profesor(int id, String nombre, String apellido, String correoElectronico, String contraseña, String materia) {
-        super(id, nombre, apellido, correoElectronico, contraseña);
-        this.materia = materia;
-    }
+    @OneToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
+    @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL)
+    private Set<Alumno> alumnosAsignados = new HashSet<>();
     public String getMateria() {
         return materia;
     }
@@ -19,11 +30,11 @@ public class Profesor extends Usuario {
         this.materia = materia;
     }
 
-    public List<Alumno> getAlumnosAsignados() {
+    public Set<Alumno> getAlumnosAsignados() {
         return alumnosAsignados;
     }
 
-    public void setAlumnosAsignados(List<Alumno> alumnosAsignados) {
+    public void setAlumnosAsignados(Set<Alumno> alumnosAsignados) {
         this.alumnosAsignados = alumnosAsignados;
     }
 

@@ -1,37 +1,56 @@
 package com.agenda_virtual.controladores;
 
-import com.agenda_virtual.modelos.Alumno;
-import com.agenda_virtual.modelos.Profesor;
+
 import com.agenda_virtual.modelos.Usuario;
+import com.agenda_virtual.servicios.UsuarioServicio;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.HashMap;
-import java.util.Map;
-
+@Controller
 public class AutenticacionControlador {
 
-    // Simula una base de datos de usuarios para propósitos de ejemplo
-    private Map<String, Usuario> usuarios;
+    @Autowired
+    private UsuarioServicio usuarioServicio;
 
-    public AutenticacionControlador() {
-        // Inicializar el mapa de usuarios (en lugar de esto, se podría acceder a una base de datos real)
-        usuarios = new HashMap<>();
-
-        // Agregar algunos usuarios de ejemplo al mapa (esto debería reemplazarse por una consulta a la base de datos)
-        usuarios.put("profesor@example.com", new Profesor(1, "John", "Doe", "profesor@example.com", "profesor123", "Matemáticas"));
-        usuarios.put("alumno@example.com", new Alumno(2, "Jane", "Doe", "alumno@example.com", "alumno123", 10,"A"));
+    @GetMapping("/iniciarSesion")
+    public String mostrarInicioSesion() {
+        return "inicioSesion";
     }
 
-    // Método para iniciar sesión
-    public Usuario iniciarSesion(String correoElectronico, String contrasena) {
-        Usuario usuario = usuarios.get(correoElectronico);
-
-        if (usuario != null && usuario.getContraseña().equals(contrasena)) {
-            // Inicio de sesión exitoso
-            return usuario;
-        } else {
-            // Inicio de sesión fallido
-            return null;
+    @PostMapping("/iniciarSesion")
+    public String iniciarSesion(@RequestParam("correoElectronico") String correoElectronico,
+                                @RequestParam("contrasena") String contrasena,
+                                Model model) {
+        Usuario usuario = usuarioServicio.autenticarUsuario(correoElectronico, contrasena);
+        if (usuario == null) {
+            model.addAttribute("error", "Correo electrónico o contraseña incorrecta.");
+            return "inicioSesion";
         }
+
+        // Aquí puedes agregar la lógica para redirigir a la página principal correspondiente
+        // según el rol del usuario (profesor, alumno, padre, administrativo)
+        return "redirect:/";
+    }
+
+    @GetMapping("/registro")
+    public String mostrarRegistro() {
+        return "registro";
+    }
+
+    @PostMapping("/registro")
+    public String registrarUsuario(Usuario usuario, Model model) {
+        Usuario usuarioRegistrado = usuarioServicio.registrarUsuario(usuario);
+        if (usuarioRegistrado == null) {
+            model.addAttribute("error", "No se pudo registrar al usuario. Intente nuevamente.");
+            return "registro";
+        }
+
+        // Aquí puedes agregar la lógica para redirigir a la página principal correspondiente
+        // según el rol del usuario (profesor, alumno, padre, administrativo)
+        return "redirect:/";
     }
 }
-

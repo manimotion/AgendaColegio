@@ -2,28 +2,31 @@ package com.agenda_virtual.modelos;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "pagos")
 public class Pago {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "alumno_id")
     private Alumno alumno;
-    private double monto;
-    private LocalDateTime fecha;
+
+    private Double monto;
+    private LocalDate fecha;
     private String descripcion;
 
-    public Pago(int id, Alumno alumno, double monto, LocalDateTime fecha, String descripcion) {
-        this.id = id;
-        this.alumno = alumno;
-        this.monto = monto;
-        this.fecha = fecha;
-        this.descripcion = descripcion;
-    }
-
     // Getters y setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -43,11 +46,11 @@ public class Pago {
         this.monto = monto;
     }
 
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

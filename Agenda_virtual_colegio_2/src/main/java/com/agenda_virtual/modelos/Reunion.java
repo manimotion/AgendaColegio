@@ -1,29 +1,33 @@
 package com.agenda_virtual.modelos;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "reuniones")
 public class Reunion {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "profesor_id")
     private Profesor profesor;
+
+    @ManyToOne
+    @JoinColumn(name = "alumno_id")
     private Alumno alumno;
+
     private LocalDateTime fechaHora;
     private String descripcion;
 
-    public Reunion(int id, Profesor profesor, Alumno alumno, LocalDateTime fechaHora, String descripcion) {
-        this.id = id;
-        this.profesor = profesor;
-        this.alumno = alumno;
-        this.fechaHora = fechaHora;
-        this.descripcion = descripcion;
-    }
-
     // Getters y setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

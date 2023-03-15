@@ -1,25 +1,59 @@
 package com.agenda_virtual.modelos;
 
-public abstract class Usuario {
-    private int id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "usuarios")
+public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotEmpty
     private String nombre;
+
+    @NotEmpty
     private String apellido;
+
+    @NotEmpty
+    @Email
+    @Column(unique = true)
     private String correoElectronico;
+
+    @NotEmpty
+    @Size(min = 8)
     private String contraseña;
 
-    public Usuario(int id, String nombre, String apellido, String correoElectronico, String contraseña) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correoElectronico = correoElectronico;
-        this.contraseña = contraseña;
-    }
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Profesor profesor;
 
-    public int getId() {
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Alumno alumno;
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Padre padre;
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Administrativo administrativo;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "usuario_rol",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    private Set<Rol> roles = new HashSet<>();
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

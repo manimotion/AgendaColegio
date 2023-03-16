@@ -20,5 +20,13 @@ public class ReunionServicio {
     public Reunion guardarReunion(Reunion reunion) {
         return reunionRepositorio.save(reunion);
     }
+
+    public Reunion obtenerReunionPorId(Long id) {
+        return reunionRepositorio.findById(id).orElse(null);
+    }
+
+    public void eliminarReunion(Long id) {
+        reunionRepositorio.deleteById(id);
+    }
 }
 

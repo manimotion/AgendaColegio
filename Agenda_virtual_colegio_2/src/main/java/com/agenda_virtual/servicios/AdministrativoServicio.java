@@ -24,11 +24,12 @@ public class AdministrativoServicio {
         return administrativo.orElse(null);
     }
 
-    public void guardar(Administrativo administrativo) {
+    public Administrativo guardar(Administrativo administrativo) {
         administrativoRepositorio.save(administrativo);
+        return administrativo;
     }
 
-    public void actualizar(Long id, Administrativo administrativoActualizado) {
+    public Administrativo actualizar(Long id, Administrativo administrativoActualizado) {
         Optional<Administrativo> administrativo = administrativoRepositorio.findById(id);
         if (administrativo.isPresent()) {
             administrativo.get().setNombre(administrativoActualizado.getNombre());
@@ -37,6 +38,7 @@ public class AdministrativoServicio {
             administrativo.get().setDepartamento(administrativoActualizado.getDepartamento());
             administrativoRepositorio.save(administrativo.get());
         }
+        return administrativoActualizado;
     }
 
     public void eliminar(Long id) {

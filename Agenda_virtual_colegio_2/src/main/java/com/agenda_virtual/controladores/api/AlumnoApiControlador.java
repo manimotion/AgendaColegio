@@ -1,4 +1,4 @@
-package com.agenda_virtual.controladores;
+package com.agenda_virtual.controladores.api;
 
 import com.agenda_virtual.modelos.Alumno;
 import com.agenda_virtual.servicios.AlumnoServicio;

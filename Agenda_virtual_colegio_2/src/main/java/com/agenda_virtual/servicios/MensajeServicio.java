@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MensajeServicio {
@@ -19,5 +20,13 @@ public class MensajeServicio {
 
     public Mensaje enviarMensaje(Mensaje mensaje) {
         return mensajeRepositorio.save(mensaje);
+    }
+
+    public Optional<Mensaje> obtenerMensajePorId(Long id) {
+        return mensajeRepositorio.findById(id);
+    }
+
+    public void eliminarMensaje(Long id) {
+        mensajeRepositorio.deleteById(id);
     }
 }

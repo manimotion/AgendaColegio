@@ -20,6 +20,7 @@ public class Profesor {
 
     @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL)
     private Set<Alumno> alumnosAsignados = new HashSet<>();
+
     public String getMateria() {
         return materia;
     }
@@ -44,6 +45,15 @@ public class Profesor {
     // Método para eliminar un alumno asignado al profesor
     public void eliminarAlumnoAsignado(Alumno alumno) {
         alumnosAsignados.remove(alumno);
+    }
+
+    // Métodos getUsuario y setUsuario
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override

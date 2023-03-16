@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NotaServicio {
@@ -19,5 +20,13 @@ public class NotaServicio {
 
     public Nota guardarNota(Nota nota) {
         return notaRepositorio.save(nota);
+    }
+
+    public Optional<Nota> obtenerNotaPorId(Long id) {
+        return notaRepositorio.findById(id);
+    }
+
+    public void eliminarNota(Long id) {
+        notaRepositorio.deleteById(id);
     }
 }

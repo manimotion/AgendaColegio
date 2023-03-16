@@ -20,5 +20,13 @@ public class TareaServicio {
     public Tarea guardarTarea(Tarea tarea) {
         return tareaRepositorio.save(tarea);
     }
+
+    public Tarea obtenerTareaPorId(Long id) {
+        return tareaRepositorio.findById(id).orElse(null);
+    }
+
+    public void eliminarTarea(Long id) {
+        tareaRepositorio.deleteById(id);
+    }
 }
 

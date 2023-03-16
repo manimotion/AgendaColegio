@@ -90,4 +90,8 @@ public class UsuarioServicio {
         // Aquí puedes agregar cualquier validación adicional o lógica de negocio antes de guardar el usuario.
         return usuarioRepositorio.save(usuario);
     }
+
+    public Usuario findByEmail(String correoElectronico) {
+        return usuarioRepositorio.findByCorreoElectronico(correoElectronico);
+    }
 }

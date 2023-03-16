@@ -1,23 +1,33 @@
 package com.agenda_virtual.modelos;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
 @Table(name = "alumnos")
-public class Alumno extends Usuario {
+public class Alumno {
 
-    @Column(nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotEmpty
     private String nombre;
 
-    @Column(nullable = false)
+    @NotEmpty
     private String apellido;
 
-    @Column(nullable = false, unique = true)
+    @NotEmpty
+    @Email
+    @Column(unique = true)
     private String correoElectronico;
 
-    @Column(nullable = false)
-    private String contrasena;
+    @NotEmpty
+    @Size(min = 8)
+    private String contraseña;
 
     @Column(nullable = false)
     private String grado;
@@ -39,10 +49,15 @@ public class Alumno extends Usuario {
     @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Tarea> tareas;
 
-    public Alumno() {
+    // Getters y setters
+
+    public Long getId() {
+        return id;
     }
 
-    // Getters y setters
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNombre() {
         return nombre;
@@ -68,12 +83,12 @@ public class Alumno extends Usuario {
         this.correoElectronico = correoElectronico;
     }
 
-    public String getContrasena() {
-        return contrasena;
+    public String getContraseña() {
+        return contraseña;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
     }
 
     public String getGrado() {
@@ -92,6 +107,22 @@ public class Alumno extends Usuario {
         this.seccion = seccion;
     }
 
+    public Padre getPadre() {
+        return padre;
+    }
+
+    public void setPadre(Padre padre) {
+        this.padre = padre;
+    }
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
+    }
+
     public List<Nota> getNotas() {
         return notas;
     }
@@ -107,41 +138,4 @@ public class Alumno extends Usuario {
     public void setTareas(List<Tarea> tareas) {
         this.tareas = tareas;
     }
-
-    public Profesor getProfesor() {
-        return profesor;
-    }
-
-    public void setProfesor(Profesor profesor) {
-        this.profesor = profesor;
-    }
-
-    public Padre getPadre() {
-        return padre;
-    }
-
-    public void setPadre(Padre padre) {
-        this.padre = padre;
-    }
-
-    // Método para agregar una nota al alumno
-    public void agregarNota(Nota nota) {
-        notas.add(nota);
-    }
-
-    // Método para agregar una tarea al alumno
-    public void agregarTarea(Tarea tarea) {
-        tareas.add(tarea);
-    }
-
-    @Override
-    public String toString() {
-        return "Alumno{" +
-                "grado=" + grado +
-                ", seccion='" + seccion + '\'' +
-                ", notas=" + notas +
-                ", tareas=" + tareas +
-                "} " + super.toString();
-    }
 }
-

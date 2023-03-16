@@ -21,6 +21,16 @@ public class Padre {
     @OneToMany(mappedBy = "padre", cascade = CascadeType.ALL)
     private Set<Alumno> hijos = new HashSet<>();
 
+    // Getters y setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getTelefono() {
         return telefono;
     }
@@ -29,29 +39,19 @@ public class Padre {
         this.telefono = telefono;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     public Set<Alumno> getHijos() {
         return hijos;
     }
 
     public void setHijos(Set<Alumno> hijos) {
         this.hijos = hijos;
-    }
-
-    // Método para agregar un hijo al padre
-    public void agregarHijo(Alumno hijo) {
-        hijos.add(hijo);
-    }
-
-    // Método para eliminar un hijo del padre
-    public void eliminarHijo(Alumno hijo) {
-        hijos.remove(hijo);
-    }
-
-    @Override
-    public String toString() {
-        return "Padre{" +
-                "telefono='" + telefono + '\'' +
-                ", hijos=" + hijos +
-                "} " + super.toString();
     }
 }

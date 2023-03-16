@@ -1,10 +1,9 @@
 package com.agenda_virtual.modelos;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
-
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,9 +34,6 @@ public class Usuario {
     private Profesor profesor;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private Alumno alumno;
-
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Padre padre;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
@@ -55,6 +51,40 @@ public class Usuario {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    // Agrega los métodos getter y setter para las relaciones
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
+    }
+
+    public Padre getPadre() {
+        return padre;
+    }
+
+    public void setPadre(Padre padre) {
+        this.padre = padre;
+    }
+
+    public Administrativo getAdministrativo() {
+        return administrativo;
+    }
+
+    public void setAdministrativo(Administrativo administrativo) {
+        this.administrativo = administrativo;
+    }
+
+    public Set<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Rol> roles) {
+        this.roles = roles;
     }
 
     public String getNombre() {
@@ -87,16 +117,5 @@ public class Usuario {
 
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
-    }
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", correoElectronico='" + correoElectronico + '\'' +
-                ", contraseña='" + contraseña + '\'' +
-                '}';
     }
 }

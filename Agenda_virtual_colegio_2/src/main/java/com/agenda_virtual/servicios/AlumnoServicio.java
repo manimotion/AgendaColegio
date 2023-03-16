@@ -35,7 +35,7 @@ public class AlumnoServicio {
             alumno.setNombre(alumnoActualizado.getNombre());
             alumno.setApellido(alumnoActualizado.getApellido());
             alumno.setCorreoElectronico(alumnoActualizado.getCorreoElectronico());
-            alumno.setContrasena(alumnoActualizado.getContrasena());
+            alumno.setContraseña(alumnoActualizado.getContraseña());
             alumno.setGrado(alumnoActualizado.getGrado());
             alumno.setSeccion(alumnoActualizado.getSeccion());
             alumno.setNotas(alumnoActualizado.getNotas());

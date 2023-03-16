@@ -1,7 +1,5 @@
 package com.agenda_virtual.modelos;
 
-import com.sun.tools.javac.util.List;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

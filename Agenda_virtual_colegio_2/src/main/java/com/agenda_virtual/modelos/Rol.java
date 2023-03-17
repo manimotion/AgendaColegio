@@ -1,5 +1,7 @@
 package com.agenda_virtual.modelos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +17,7 @@ public class Rol {
     @Column(unique = true)
     private String nombre;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Usuario> usuarios = new HashSet<>();
 

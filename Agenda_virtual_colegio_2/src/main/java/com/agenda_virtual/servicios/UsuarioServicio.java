@@ -7,13 +7,18 @@ import com.agenda_virtual.repositorios.AlumnoRepositorio;
 import com.agenda_virtual.repositorios.PadreRepositorio;
 import com.agenda_virtual.repositorios.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UsuarioServicio {
+public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
@@ -93,5 +98,22 @@ public class UsuarioServicio {
 
     public Usuario findByEmail(String correoElectronico) {
         return usuarioRepositorio.findByCorreoElectronico(correoElectronico);
+    }
+
+    public Optional<Usuario> buscarUsuarioPorId(Long id) {
+        return usuarioRepositorio.findById(id);
+    }
+
+    public List<Usuario> obtenerTodosUsuarios() {
+        return usuarioRepositorio.findAll();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Usuario usuario = usuarioRepositorio.findByCorreoElectronico(email);
+        if (usuario == null) {
+            throw new UsernameNotFoundException("No se encontró el usuario con el correo electrónico: " + email);
+        }
+        return new org.springframework.security.core.userdetails.User(usuario.getCorreoElectronico(), usuario.getContraseña(), new ArrayList<>());
     }
 }

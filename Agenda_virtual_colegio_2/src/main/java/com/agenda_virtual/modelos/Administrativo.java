@@ -11,10 +11,10 @@ public class Administrativo extends Usuario {
     @Column(nullable = false)
     private String apellido;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String cargo;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String departamento;
 
     @OneToOne

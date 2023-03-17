@@ -48,4 +48,10 @@ public class AutenticacionApiController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> cerrarSesion() {
+        SecurityContextHolder.getContext().setAuthentication(null);
+        return ResponseEntity.ok("Sesión cerrada con éxito");
+    }
 }

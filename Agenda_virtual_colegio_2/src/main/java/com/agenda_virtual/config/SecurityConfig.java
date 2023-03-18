@@ -16,7 +16,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     @Autowired
     private UsuarioServicio usuarioServicio;
 
@@ -42,7 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/api/**").permitAll()
+                .antMatchers("/api/**", "/registro").permitAll()
+                .antMatchers("/css/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
